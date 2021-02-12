@@ -9,7 +9,9 @@ class BDD {
     
     public static void main(String[] args) throws SQLException {
         /* Connexion à la base de données */
-        String url = "jdbc:mysql://127.0.0.1:3306/ap2_gsb2";
+        String url = "jdbc:mysql://127.0.0.1:3306/ap2_gsb2 ?useUnicode=true"
+        +"&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&"
+        +"serverTimezone=UTC";
         String utilisateur = "root";
         String motDePasse = "Simon59300sql";
         Connection connexion = null;
