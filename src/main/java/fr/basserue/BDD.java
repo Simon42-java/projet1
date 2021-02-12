@@ -5,9 +5,49 @@ import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 
+import javafx.event.ActionEvent;
+import javafx.fxml.FXML;
+import javafx.scene.control.Button;
+import javafx.scene.control.CheckBox;
+import javafx.scene.control.PasswordField;
+import javafx.scene.control.TextField;
+
 class BDD {
+    public class PleaseProvideControllerClassName {
+
+        @FXML
+        private CheckBox visteur;
     
-    public static void main(String[] args) throws SQLException {
+        @FXML
+        private CheckBox comptable;
+    
+        @FXML
+        private TextField login;
+    
+        @FXML
+        private PasswordField motdepasse;
+    
+        @FXML
+        private Button bt_authentifier;
+    
+        @FXML
+        private Button bt_annuler;
+
+
+        @FXML
+        void identifier(ActionEvent event) {
+            System.out.println(login.getText());
+             }
+
+        @FXML
+        void annuler(ActionEvent event) {
+            System.out.println(login.getText());
+         }
+        
+    
+    }
+    public void main(String[] args) throws SQLException {
+        
         /* Connexion à la base de données */
         String url = "jdbc:mysql://127.0.0.1:3306/ap2_gsb2 ?useUnicode=true"
         +"&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&"
@@ -39,4 +79,5 @@ class BDD {
         }
     }
 
-    }
+    
+ }

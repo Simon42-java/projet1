@@ -1,0 +1,11 @@
+1) Simon : liaison BDD avec le code, liaison IHM avec la BDD
+Benjamin : liaison BDD avec le code, liaison IHM avec la BDD
+Lucas : interface graphique
+Thibaut : Création de la BDD et quelques insert
+
+2) Avancement : Nous avons réussi a lié la base de donnée que thibaut a fait avec le code java et rentrer des valeurs dans la BDD avec le code java,
+Nous avons commencé à lié la BDD avec l'IMH (en cours de finalisation). Nous avons aussi fait une interface de création de compte et de login.
+Nous avons une base de donnée pratiquement identique au shéma fournie et nous avons deja résussi à faire quelques insert et update.
+Nous mettons en commun notre travail avec git-hub et sur un serveur discord.
+
+3)Difficultés : Difficulté pour prendre les données depuis l'interface homme machine et aussi sur certains insert avec la BDD
