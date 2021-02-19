@@ -16,7 +16,7 @@ class BDD {
     public class PleaseProvideControllerClassName {
 
         @FXML
-        private CheckBox visteur;
+        private CheckBox visiteur;
     
         @FXML
         private CheckBox comptable;
@@ -43,9 +43,6 @@ class BDD {
         void annuler(ActionEvent event) {
             System.out.println(login.getText());
          }
-        
-    
-    }
     public void main(String[] args) throws SQLException {
         
         /* Connexion à la base de données */
@@ -55,14 +52,12 @@ class BDD {
         String utilisateur = "root";
         String motDePasse = "Simon59300sql";
         Connection connexion = null;
-        
 
         try {
             connexion = DriverManager.getConnection(url, utilisateur, motDePasse);
-            String sql = "INSERT INTO agents ( ag_nom, ag_password, fk_se, fk_ta,fk_ve) "
-            +"VALUE( ?, ?, ?, ?, ?)";
+            String sql = "SELECT * FROM agents where ag_nom LIKE " + login + " and ag_password like " + motdepasse + ";";
             PreparedStatement statement = connexion.prepareStatement(sql);
-            statement.setString(1, "lucas");
+            /*statement.setString(1, "lucas");
             statement.setString(2, "lucas");
             statement.setInt(3, 2);
             statement.setInt(4, 1);
@@ -73,11 +68,13 @@ class BDD {
                 System.out.println("A new user was inserted successfully!");
             }
     
-        }catch (SQLException ex) {
+        }*/}catch (SQLException ex) {
             ex.printStackTrace();
             System.out.println(ex.getMessage());
+      
+        }
+        
         }
     }
+}
 
-    
- }
