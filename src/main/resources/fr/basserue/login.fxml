@@ -1,80 +1,75 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.geometry.Insets?>
-<?import javafx.scene.Cursor?>
+<!--
+  Copyright (c) 2015, 2019, Gluon and/or its affiliates.
+  All rights reserved. Use is subject to license terms.
+
+  This file is available and licensed under the following license:
+
+  Redistribution and use in source and binary forms, with or without
+  modification, are permitted provided that the following conditions
+  are met:
+
+  - Redistributions of source code must retain the above copyright
+    notice, this list of conditions and the following disclaimer.
+  - Redistributions in binary form must reproduce the above copyright
+    notice, this list of conditions and the following disclaimer in
+    the documentation and/or other materials provided with the distribution.
+  - Neither the name of Oracle Corporation nor the names of its
+    contributors may be used to endorse or promote products derived
+    from this software without specific prior written permission.
+
+  THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
+  "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
+  LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
+  A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT
+  OWNER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
+  SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT
+  LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE,
+  DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY
+  THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
+  (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
+  OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+-->
+
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.CheckBox?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.PasswordField?>
 <?import javafx.scene.control.TextField?>
-<?import javafx.scene.effect.Blend?>
-<?import javafx.scene.effect.Light.Distant?>
-<?import javafx.scene.effect.Lighting?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
-<AnchorPane id="AnchorPane" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/11" fx:controller="App.java"/>
+<?import javafx.scene.text.Text?>
 
-
-<VBox prefHeight="400.0" prefWidth="640.0" xmlns="http://javafx.com/javafx/15.0.1" xmlns:fx="http://javafx.com/fxml/1">
+<VBox alignment="CENTER" minHeight="-Infinity" minWidth="-Infinity" xmlns="http://javafx.com/javafx/15.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="fr.basserue.PrimaryController">
   <children>
-    <AnchorPane maxHeight="-1.0" maxWidth="-1.0" nodeOrientation="LEFT_TO_RIGHT" prefHeight="-1.0" prefWidth="-1.0" style="-fx-background-color: white;" VBox.vgrow="ALWAYS">
+      <AnchorPane minWidth="-Infinity" style="-fx-background-color: white;">
          <children>
-            <Label ellipsisString="" layoutX="340.0" layoutY="14.0" prefHeight="66.0" prefWidth="223.0" text="Inscription" textFill="#ffb200">
+            <BorderPane layoutY="-6.0" style="-fx-background-color: ORANGE;" />
+            <CheckBox fx:id="visteur" layoutX="411.0" layoutY="703.0" mnemonicParsing="false" text="Visiteur médical" textFill="#ff9500" />
+            <CheckBox fx:id="comptable" layoutX="1035.0" layoutY="709.0" mnemonicParsing="false" prefWidth="152.0" text="Comptable " textFill="#ff9d00" />
+            <Label layoutX="631.0" layoutY="151.0" text="Authentification" textFill="#ffab00">
                <font>
-                  <Font name="David CLM Bold" size="38.0" />
+                  <Font size="39.0" />
                </font>
             </Label>
-            <TextField layoutX="401.0" layoutY="133.0" style="-fx-background-color: #DCDCDC;">
+            <TextField fx:id="login" layoutX="712.0" layoutY="344.0" />
+            <Text fill="#eba000" layoutX="604.0" layoutY="369.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Login : ">
                <font>
-                  <Font size="13.0" />
-               </font></TextField>
-            <Label layoutX="299.0" layoutY="136.0" text="Login" textFill="#525756" underline="true">
-               <font>
-                  <Font name="Carlito" size="19.0" />
+                  <Font size="31.0" />
                </font>
-            </Label>
-            <PasswordField layoutX="401.0" layoutY="200.0" prefHeight="25.0" prefWidth="162.0" style="-fx-background-color: #DCDCDC;" />
-            <Label layoutX="281.0" layoutY="200.0" text="Mot de passe " textFill="#393939" underline="true">
+            </Text>
+            <Text fill="#eba000" layoutX="532.0" layoutY="412.0" strokeType="OUTSIDE" strokeWidth="0.0" text=" Mot de passe : " wrappingWidth="197.0">
                <font>
-                  <Font size="16.0" />
+                  <Font size="26.0" />
                </font>
-            </Label>
-            <Button graphicTextGap="5.0" layoutX="272.0" layoutY="235.0" mnemonicParsing="false" nodeOrientation="RIGHT_TO_LEFT" prefHeight="22.0" prefWidth="354.0" style="-fx-background-color: orange;" text="S'authentifier" textAlignment="CENTER" textFill="#fff7f7" underline="true">
-               <font>
-                  <Font size="17.0" />
-               </font>
-               <effect>
-                  <Blend mode="RED" opacity="0.43" />
-               </effect>
-            </Button>
-            <BorderPane prefHeight="400.0" prefWidth="260.0" style="-fx-background-color: #DCDCDC;">
-               <center>
-                  <BorderPane prefHeight="200.0" prefWidth="200.0" style="-fx-background-color: orange;" BorderPane.alignment="CENTER" />
-               </center>
-            </BorderPane>
-            <CheckBox layoutX="510.0" layoutY="360.0" mnemonicParsing="false" text="Visiteur médical" />
-            <CheckBox layoutX="301.0" layoutY="360.0" mnemonicParsing="false" text="Comptable" />
-            <Button layoutX="274.0" layoutY="300.0" mnemonicParsing="false" prefHeight="38.0" prefWidth="354.0" style="-fx-background-color: orange;" text="Annuler" textFill="WHITE">
-               <font>
-                  <Font size="17.0" />
-               </font>
-            </Button>
+            </Text>
+            <PasswordField fx:id="motdepasse" layoutX="712.0" layoutY="389.0" />
+            <Button fx:id="bt_authentifier" layoutX="654.0" layoutY="472.0" mnemonicParsing="false" prefHeight="46.0" prefWidth="248.0" style="-fx-background-color: orange;" text="S'authentifier" textFill="WHITE" />
+            <Button fx:id="bt_annuler" layoutX="702.0" layoutY="581.0" mnemonicParsing="false" prefHeight="32.0" prefWidth="152.0" style="-fx-background-color: orange;" text="Annuler" textFill="WHITE" />
          </children>
-         <opaqueInsets>
-            <Insets />
-         </opaqueInsets>
-         <cursor>
-            <Cursor fx:constant="S_RESIZE" />
-         </cursor>
-         <effect>
-            <Lighting bumpInput="$null" diffuseConstant="2.0">
-               <light>
-                  <Light.Distant />
-               </light>
-            </Lighting>
-         </effect>
-    </AnchorPane>
+      </AnchorPane>
   </children>
 </VBox>
