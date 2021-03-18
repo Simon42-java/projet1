@@ -1,5 +1,6 @@
 package fr.basserue;
 
+
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -17,7 +18,7 @@ public class App extends Application {
 
     @Override
     public void start(Stage stage) throws IOException {
-        scene = new Scene(loadFXML("loginauthentification"));
+        scene = new Scene(loadFXML("authentification1"));
         stage.setScene(scene);
         stage.show();
     }

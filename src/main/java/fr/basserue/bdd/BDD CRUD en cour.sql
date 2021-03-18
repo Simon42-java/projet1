@@ -1,6 +1,6 @@
 -- MySQL dump 10.13  Distrib 8.0.23, for Win64 (x86_64)
 --
--- Host: localhost    Database: ap2_gsb
+-- Host: 127.0.0.1    Database: ap2_gsb
 -- ------------------------------------------------------
 -- Server version	8.0.23
 
@@ -24,19 +24,19 @@ DROP TABLE IF EXISTS `agents`;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `agents` (
   `ag_matricule` int NOT NULL AUTO_INCREMENT,
-  `ag_nom` varchar(45) NOT NULL,
+  `ag_nom_utilisateur` varchar(45) NOT NULL,
   `ag_password` varchar(45) NOT NULL,
   `fk_se` int NOT NULL,
   `fk_ta` int NOT NULL,
   `fk_ve` char(7) DEFAULT NULL,
   PRIMARY KEY (`ag_matricule`),
+  UNIQUE KEY `ag_matricule_UNIQUE` (`ag_matricule`),
   KEY `fk_AGENTS_1_idx` (`fk_se`),
   KEY `fk_AGENTS_2_idx` (`fk_ta`),
   KEY `fk_AGENTS_3_idx` (`fk_ve`),
-  CONSTRAINT `fk_AGENTS_1` FOREIGN KEY (`fk_se`) REFERENCES `secteurs` (`se_id`),
   CONSTRAINT `fk_AGENTS_2` FOREIGN KEY (`fk_ta`) REFERENCES `type_agent` (`ta_id`),
   CONSTRAINT `fk_AGENTS_3` FOREIGN KEY (`fk_ve`) REFERENCES `vehicules` (`ve_immat`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -45,6 +45,7 @@ CREATE TABLE `agents` (
 
 LOCK TABLES `agents` WRITE;
 /*!40000 ALTER TABLE `agents` DISABLE KEYS */;
+INSERT INTO `agents` VALUES (1,'Benjamin','password1',1,1,'AAAAAAA'),(2,'Thibault','password2',2,1,'AAAAAAB'),(3,'Simon','password3',3,1,'AAAAAAC'),(4,'Lucas','password4',4,2,NULL),(5,'Weshdeyne','password5',5,1,'AAAAAAD'),(6,'Arthur','password6',6,2,'AAAAAAG');
 /*!40000 ALTER TABLE `agents` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -57,13 +58,13 @@ DROP TABLE IF EXISTS `fdrm`;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `fdrm` (
   `fk_ag` int NOT NULL,
-  `fdrm_mois` tinyint NOT NULL,
+  `fdrm_mois` char(5) NOT NULL,
   `fdrm_reception` date DEFAULT NULL,
   `fdrm_validation` date DEFAULT NULL,
   `fdrm_paiement` date DEFAULT NULL,
   `fdrm_remboursement` date DEFAULT NULL,
   `nbrj_conges` tinyint DEFAULT NULL,
-  `fk_ag_comptable` int DEFAULT NULL,
+  `fk_ag_comptable` int NOT NULL,
   PRIMARY KEY (`fk_ag`,`fdrm_mois`),
   KEY `fk_FDRM_1_idx` (`fk_ag`),
   KEY `fk_FDRM_2_idx` (`fk_ag_comptable`),
@@ -78,6 +79,7 @@ CREATE TABLE `fdrm` (
 
 LOCK TABLES `fdrm` WRITE;
 /*!40000 ALTER TABLE `fdrm` DISABLE KEYS */;
+INSERT INTO `fdrm` VALUES (1,'04/20',NULL,NULL,NULL,NULL,NULL,4),(1,'12/20',NULL,NULL,NULL,NULL,NULL,4),(2,'03/20',NULL,NULL,NULL,NULL,NULL,4);
 /*!40000 ALTER TABLE `fdrm` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -93,21 +95,21 @@ CREATE TABLE `frais` (
   `fr_libelle_libre` varchar(45) DEFAULT NULL,
   `fr_date` date NOT NULL,
   `fr_quantite` int NOT NULL,
-  `fr_montant` decimal(6,2) NOT NULL,
+  `fr_montant` decimal(6,2) DEFAULT NULL,
   `fr_taxe` decimal(6,2) NOT NULL,
-  `fr_status` tinyint NOT NULL,
+  `fr_status` tinyint NOT NULL COMMENT '0 = Entrée\\n1 = Réceptionnée\\n2 = Validée \\n3 = Payée\\n4 = Remboursée\\n5 = Cloturée',
   `fk_tre` int DEFAULT NULL,
   `fk_mfr` int DEFAULT NULL,
-  `fk_frdm_ag` int NOT NULL,
-  `fk_frdm_mois` tinyint NOT NULL,
+  `fk_fdrm_ag` int NOT NULL,
+  `fk_fdrm_mois` char(5) NOT NULL,
   PRIMARY KEY (`fr_id`),
   KEY `fk_FRAIS_1_idx` (`fk_tre`),
   KEY `fk_FRAIS_2_idx` (`fk_mfr`),
-  KEY `fk_FRAIS_3_idx` (`fk_frdm_ag`,`fk_frdm_mois`),
+  KEY `fk_FRAIS_3_idx` (`fk_fdrm_ag`,`fk_fdrm_mois`),
   CONSTRAINT `fk_FRAIS_1` FOREIGN KEY (`fk_tre`) REFERENCES `type_refus` (`tre_id`),
   CONSTRAINT `fk_FRAIS_2` FOREIGN KEY (`fk_mfr`) REFERENCES `modele_frais` (`mfr_id`),
-  CONSTRAINT `fk_FRAIS_3` FOREIGN KEY (`fk_frdm_ag`, `fk_frdm_mois`) REFERENCES `fdrm` (`fk_ag`, `fdrm_mois`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+  CONSTRAINT `fk_FRAIS_3` FOREIGN KEY (`fk_fdrm_ag`, `fk_fdrm_mois`) REFERENCES `fdrm` (`fk_ag`, `fdrm_mois`)
+) ENGINE=InnoDB AUTO_INCREMENT=13 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -116,6 +118,7 @@ CREATE TABLE `frais` (
 
 LOCK TABLES `frais` WRITE;
 /*!40000 ALTER TABLE `frais` DISABLE KEYS */;
+INSERT INTO `frais` VALUES (5,'TEST1','2020-04-01',3,50.00,5.00,0,NULL,NULL,1,'04/20'),(6,'TEST2','2020-12-01',5,100.00,5.00,0,NULL,NULL,1,'12/20'),(7,NULL,'2020-12-01',4,100.00,5.00,0,NULL,2,1,'12/20'),(8,NULL,'2020-04-01',2,142.00,5.00,0,NULL,5,1,'04/20'),(12,'Test3','2020-03-02',4,20.00,5.00,0,NULL,NULL,2,'03/20');
 /*!40000 ALTER TABLE `frais` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -132,7 +135,7 @@ CREATE TABLE `frais_km` (
   `fkm_carburant` varchar(45) NOT NULL,
   `fkm_remb` decimal(4,2) NOT NULL,
   PRIMARY KEY (`fkm_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -141,7 +144,7 @@ CREATE TABLE `frais_km` (
 
 LOCK TABLES `frais_km` WRITE;
 /*!40000 ALTER TABLE `frais_km` DISABLE KEYS */;
-INSERT INTO `frais_km` VALUES (1,4,'diesel',0.52),(2,5,'diesel',0.58),(3,6,'diesel',0.58),(4,4,'essence',0.62),(5,5,'essence',0.67),(6,6,'essence',0.67);
+INSERT INTO `frais_km` VALUES (1,4,'Diesel',0.52),(2,5,'Diesel',0.58),(3,6,'Diesel',0.58),(4,4,'Essence',0.62),(5,5,'Essence',0.67),(6,6,'Essence',0.67);
 /*!40000 ALTER TABLE `frais_km` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -166,6 +169,7 @@ CREATE TABLE `modele_frais` (
 
 LOCK TABLES `modele_frais` WRITE;
 /*!40000 ALTER TABLE `modele_frais` DISABLE KEYS */;
+INSERT INTO `modele_frais` VALUES (1,'Repas midi (R1)',23.00),(2,'Repas midi (R2)',25.00),(3,'Repas midi (R3)',29.00),(4,'Nuitée simple (R1)',66.00),(5,'Nuitée simple (R2)',71.00),(6,'Nuitée simple (R3)',80.00),(7,'Repas soir + nuitée (R1)',77.00),(8,'Repas soir + nuitée (R2)',82.00),(9,'Repas soir + nuitée (R3)',92.00),(10,'Test',20.00);
 /*!40000 ALTER TABLE `modele_frais` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -205,7 +209,7 @@ CREATE TABLE `secteurs` (
   `se_id` int NOT NULL AUTO_INCREMENT,
   `se_libelle` varchar(45) NOT NULL,
   PRIMARY KEY (`se_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -214,7 +218,7 @@ CREATE TABLE `secteurs` (
 
 LOCK TABLES `secteurs` WRITE;
 /*!40000 ALTER TABLE `secteurs` DISABLE KEYS */;
-INSERT INTO `secteurs` VALUES (1,'R1'),(2,'R2'),(3,'R3');
+INSERT INTO `secteurs` VALUES (1,'R1'),(2,'R2'),(3,'R3'),(4,'COMPTABLE R1'),(5,'COMPTABLE R2'),(6,'COMPTABLE R3');
 /*!40000 ALTER TABLE `secteurs` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -229,7 +233,7 @@ CREATE TABLE `type_agent` (
   `ta_id` int NOT NULL AUTO_INCREMENT,
   `ta_libelle` varchar(45) NOT NULL,
   PRIMARY KEY (`ta_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -238,7 +242,7 @@ CREATE TABLE `type_agent` (
 
 LOCK TABLES `type_agent` WRITE;
 /*!40000 ALTER TABLE `type_agent` DISABLE KEYS */;
-INSERT INTO `type_agent` VALUES (1,'visiteurs'),(2,'comptable');
+INSERT INTO `type_agent` VALUES (1,'Visiteur'),(2,'Comptable');
 /*!40000 ALTER TABLE `type_agent` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -289,6 +293,7 @@ CREATE TABLE `vehicules` (
 
 LOCK TABLES `vehicules` WRITE;
 /*!40000 ALTER TABLE `vehicules` DISABLE KEYS */;
+INSERT INTO `vehicules` VALUES ('AAAAAAA','Test1','Truc1',1),('AAAAAAB','Test2','Truc2',2),('AAAAAAC','Test3','Truc3',3),('AAAAAAD','Test4','Truc4',4),('AAAAAAE','Test5','Truc5',5),('AAAAAAF','Test6','Truc6',6),('AAAAAAG','Test7','Truc7',1),('AAAAAAH','Test8','truc8',3),('AAAAAAI','Test9','Truc9',6);
 /*!40000 ALTER TABLE `vehicules` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -301,4 +306,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2021-02-05 10:58:22
+-- Dump completed on 2021-03-18 16:21:59

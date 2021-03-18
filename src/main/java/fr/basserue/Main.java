@@ -1,7 +1,5 @@
 package fr.basserue;
 
-import javafx.stage.Stage;
-import java.util.Scanner;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -9,6 +7,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
+import javafx.stage.Stage;
 
 
 class Main {
@@ -32,22 +31,15 @@ class Main {
         @FXML
         private Button bt_annuler;
 
-        public void power(){
-            Scanner scb = new Scanner(System.in);
-            boolean bouton = scb.nextBoolean();
-            if(bouton){
+
+
+            public void btauthentification(ActionEvent event) {    
                 DataBase.selectBDD();
+             }
+            public void annuler(ActionEvent event) {
+                Stage stage = (Stage) bt_annuler.getScene().getWindow();
+                stage.close();
             }
-        }
-
-        /*public void btauthentification(ActionEvent event) {    
-            DataBase.selectBDD();
-         }
-
-        public void annuler(ActionEvent event) {
-            Stage stage = (Stage) bt_annuler.getScene().getWindow();
-            stage.close();
-        }*/
 
     }
 }
